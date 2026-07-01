@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  # ── Python API Backend (FastAPI + LangGraph Agent) ──────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: deep-research-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - MCP_LOG_LEVEL=INFO
+    volumes:
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # ── React Frontend (Vite build served by nginx) ─────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: deep-research-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  default:
+    name: deep-research-network
+
+volumes:
+  reports:
