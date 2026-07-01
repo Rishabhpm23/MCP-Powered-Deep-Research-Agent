@@ -14,6 +14,8 @@ from typing import Any
 from mcp_server.tools.search_web import search_web
 from mcp_server.tools.scrape_content import scrape_content
 from mcp_server.tools.summarize import summarize
+from mcp_server.tools.cluster_and_rank import cluster_and_rank
+from mcp_server.tools.generate_report import generate_report
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +24,8 @@ _TOOL_REGISTRY: dict[str, callable] = {
     "search_web": search_web,
     "scrape_content": scrape_content,
     "summarize": summarize,
+    "cluster_and_rank": cluster_and_rank,
+    "generate_report": generate_report,
 }
 
 

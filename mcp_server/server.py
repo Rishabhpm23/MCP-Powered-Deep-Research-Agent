@@ -17,6 +17,8 @@ from mcp.server.fastmcp import FastMCP
 from mcp_server.tools.search_web import search_web as _search_web
 from mcp_server.tools.scrape_content import scrape_content as _scrape_content
 from mcp_server.tools.summarize import summarize as _summarize
+from mcp_server.tools.cluster_and_rank import cluster_and_rank as _cluster_and_rank
+from mcp_server.tools.generate_report import generate_report as _generate_report
 
 load_dotenv()
 
@@ -88,6 +90,32 @@ def scrape_content(url: str, max_chars: int = 8000) -> dict:
 def summarize(text: str, focus: str = "", max_length: int = 150) -> dict:
     """Summarize text with an optional focus area."""
     return _summarize(text=text, focus=focus, max_length=max_length)
+
+
+# ── Tool: cluster_and_rank ───────────────────────────────────────────────
+@mcp.tool(
+    name="cluster_and_rank",
+    description=(
+        "Groups a list of text summaries into semantic clusters using TF-IDF + K-Means, "
+        "then ranks each cluster by relevance to the original research query using cosine similarity."
+    ),
+)
+def cluster_and_rank(summaries: list, query: str, num_clusters: int = 3) -> dict:
+    """Cluster and rank summaries by relevance to the query."""
+    return _cluster_and_rank(summaries=summaries, query=query, num_clusters=num_clusters)
+
+
+# ── Tool: generate_report ─────────────────────────────────────────────────
+@mcp.tool(
+    name="generate_report",
+    description=(
+        "Generates a structured research report from ranked findings. "
+        "Supports three formats: markdown_brief, comparison_table, or insight_report."
+    ),
+)
+def generate_report(findings: list, query: str, format: str = "markdown_brief") -> dict:
+    """Generate a structured Markdown research report."""
+    return _generate_report(findings=findings, query=query, format=format)
 
 
 # ── Entry Point ───────────────────────────────────────────────────────────────
