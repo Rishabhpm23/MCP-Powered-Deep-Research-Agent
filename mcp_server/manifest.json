@@ -1,0 +1,124 @@
+{
+  "name": "deep-research-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for the Deep Research Agent — exposes modular research tools to LLM orchestrators.",
+  "tools": [
+    {
+      "name": "search_web",
+      "description": "Searches the web for a given query using the Tavily API. Returns a ranked list of relevant results with titles, URLs, and snippets.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query string to look up on the web."
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of search results to return. Defaults to 5.",
+            "default": 5
+          },
+          "search_depth": {
+            "type": "string",
+            "enum": ["basic", "advanced"],
+            "description": "Depth of the search. 'advanced' retrieves more detailed results. Defaults to 'basic'.",
+            "default": "basic"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "scrape_content",
+      "description": "Scrapes the full text content from a given URL. Cleans HTML and returns only the readable text, stripping navigation, ads, and boilerplate.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The full URL of the webpage to scrape."
+          },
+          "max_chars": {
+            "type": "integer",
+            "description": "Maximum number of characters to return from the scraped page. Defaults to 8000.",
+            "default": 8000
+          }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "summarize",
+      "description": "Summarizes a block of text using an LLM. Can be focused on a specific aspect or topic to produce targeted summaries for research purposes.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The raw text content to summarize."
+          },
+          "focus": {
+            "type": "string",
+            "description": "Optional focus area or angle for the summary (e.g., 'key findings', 'methodology', 'limitations'). Leave empty for a general summary.",
+            "default": ""
+          },
+          "max_length": {
+            "type": "integer",
+            "description": "Approximate target length of the summary in words. Defaults to 150.",
+            "default": 150
+          }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "cluster_and_rank",
+      "description": "Takes multiple text summaries and clusters them by semantic similarity, then ranks each cluster by relevance to the original research query.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "summaries": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "A list of text summaries to cluster and rank."
+          },
+          "query": {
+            "type": "string",
+            "description": "The original research query used to rank clusters by relevance."
+          },
+          "num_clusters": {
+            "type": "integer",
+            "description": "Number of clusters to form. Defaults to 3.",
+            "default": 3
+          }
+        },
+        "required": ["summaries", "query"]
+      }
+    },
+    {
+      "name": "generate_report",
+      "description": "Generates a structured research report from ranked findings. Supports multiple output formats: markdown brief, comparison table, or insight report.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "findings": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "A list of ranked research findings or clustered summaries to compile into a report."
+          },
+          "query": {
+            "type": "string",
+            "description": "The original research query, used as the report title and framing context."
+          },
+          "format": {
+            "type": "string",
+            "enum": ["markdown_brief", "comparison_table", "insight_report"],
+            "description": "Output format of the report. Defaults to 'markdown_brief'.",
+            "default": "markdown_brief"
+          }
+        },
+        "required": ["findings", "query"]
+      }
+    }
+  ]
+}
