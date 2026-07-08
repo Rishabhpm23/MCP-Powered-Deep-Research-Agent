@@ -1,7 +1,7 @@
 """
 nodes.py
 ────────
-LangGraph Node implementations for the Deep Research Agent.
+LangGraph Node implementations for Zetabot.
 
 Nodes:
   - planner_node          : Uses LLM to break query into research steps

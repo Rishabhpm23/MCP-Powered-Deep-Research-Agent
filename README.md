@@ -1,4 +1,4 @@
-# 🔬 MCP-Powered Deep Research Agent
+# ⚡ Zetabot — MCP-Powered Deep Research Agent
 
 <div align="center">
 
@@ -10,9 +10,11 @@
 ![React](https://img.shields.io/badge/React-TypeScript-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-**An AI-powered deep research agent that treats every research step as a modular MCP tool, orchestrated by a stateful LangGraph agent with production-grade context engineering for multi-hop reasoning.**
+**Zetabot** *(from Greek "zetesis" — the act of investigation)* is an AI-powered deep research agent that treats every research step as a modular MCP tool, orchestrated by a stateful LangGraph agent with production-grade context engineering for multi-hop reasoning.
 
 [Features](#-features) • [Architecture](#-architecture) • [Context Engineering](#-context-engineering) • [MCP Tools](#-mcp-tool-manifest) • [Setup](#-setup) • [Usage](#-usage) • [Docker](#-docker) • [Phases](#-project-phases)
+
+> *Zetesis (ζήτησις) — Greek: the act of seeking, investigating, researching.*
 
 </div>
 
@@ -150,7 +152,7 @@ All tools are defined in `mcp_server/manifest.json` with full JSON schemas.
 ## 📁 Project Structure
 
 ```
-MCP-Powered-Deep-Research-Agent/
+Zetabot/
 │
 ├── mcp_server/                     # FastMCP server
 │   ├── server.py                   # Registers all tools via @mcp.tool()
@@ -207,8 +209,8 @@ MCP-Powered-Deep-Research-Agent/
 ### 1. Clone & Configure
 
 ```bash
-git clone https://github.com/Rishabhpm23/MCP-Powered-Deep-Research-Agent.git
-cd MCP-Powered-Deep-Research-Agent
+git clone https://github.com/Rishabhpm23/Zetabot.git
+cd Zetabot
 
 cp .env.example .env
 # Edit .env and add your API keys
@@ -412,6 +414,6 @@ Health check endpoint.
 
 Built with ❤️ by [Rishabhpm23](https://github.com/Rishabhpm23)
 
-⭐ Star this repo if it helped you learn about MCP agents and context engineering!
+⭐ Star **Zetabot** if it helped you learn about MCP agents and context engineering!
 
 </div>

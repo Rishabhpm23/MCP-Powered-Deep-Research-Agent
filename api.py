@@ -1,7 +1,7 @@
 """
 api.py
 ──────
-FastAPI backend that exposes the Deep Research Agent over HTTP.
+FastAPI backend that exposes the Zetabot Deep Research Agent over HTTP.
 Provides a streaming SSE endpoint for real-time progress updates
 and a REST endpoint for completed report retrieval.
 
@@ -26,8 +26,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(
-    title="Deep Research Agent API",
-    description="MCP-Powered Deep Research Agent — REST & SSE API",
+    title="Zetabot API",
+    description="Zetabot — MCP-Powered Deep Research Agent · REST & SSE API",
     version="1.0.0",
 )
 

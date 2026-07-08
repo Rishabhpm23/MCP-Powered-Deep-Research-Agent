@@ -1,7 +1,7 @@
 """
 run_agent.py
 ────────────
-CLI entry point for the Deep Research Agent.
+CLI entry point for Zetabot — MCP-Powered Deep Research Agent.
 Accepts a research query and runs it through the full LangGraph pipeline.
 
 Usage:
@@ -54,7 +54,7 @@ def run_research(query: str, verbose: bool = False, output_dir: str = "./reports
     Returns the final Markdown report as a string.
     """
     console.print(Panel.fit(
-        f"[bold cyan]🔬 Deep Research Agent[/bold cyan]\n"
+        f"[bold cyan]⚡ Zetabot[/bold cyan]\n"
         f"[dim]Query:[/dim] {query}",
         border_style="cyan",
     ))
@@ -139,7 +139,7 @@ def run_research(query: str, verbose: bool = False, output_dir: str = "./reports
 
 def main():
     parser = argparse.ArgumentParser(
-        description="MCP-Powered Deep Research Agent",
+        description="Zetabot — MCP-Powered Deep Research Agent",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

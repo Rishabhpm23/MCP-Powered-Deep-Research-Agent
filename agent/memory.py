@@ -1,7 +1,7 @@
 """
 memory.py
 ─────────
-Shared Memory Module for the Deep Research Agent.
+Shared Memory Module for Zetabot.
 Stores intermediate summaries, scraped content, and search results across
 reasoning hops so the agent can aggregate context before generating a report.
 

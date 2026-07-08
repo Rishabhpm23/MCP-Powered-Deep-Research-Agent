@@ -1,7 +1,7 @@
 """
 context.py
 ──────────
-ContextBuilder — Context Engineering Utility for the Deep Research Agent.
+ContextBuilder — Context Engineering Utility for Zetabot.
 
 Replaces the ad-hoc, per-node context assembly with a single, structured
 utility that provides:

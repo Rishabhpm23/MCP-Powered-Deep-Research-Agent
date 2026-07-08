@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
-    container_name: deep-research-api
+    container_name: zetabot-api
     ports:
       - "8080:8080"
     env_file:
@@ -28,7 +28,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
-    container_name: deep-research-frontend
+    container_name: zetabot-frontend
     ports:
       - "3000:80"
     depends_on:
@@ -38,7 +38,7 @@ services:
 
 networks:
   default:
-    name: deep-research-network
+    name: zetabot-network
 
 volumes:
   reports:

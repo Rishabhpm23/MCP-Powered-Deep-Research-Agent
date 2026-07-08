@@ -1,7 +1,7 @@
 """
 state.py
 ────────
-LangGraph State definition for the Deep Research Agent.
+LangGraph State definition for Zetabot.
 All nodes read from and write to this shared TypedDict.
 
 Context Engineering improvement (ref: Context Engineering Analysis):

@@ -1,7 +1,7 @@
 """
 server.py
 ─────────
-FastMCP Server — Deep Research Agent
+FastMCP Server — Zetabot
 Registers all research tools and exposes them via the MCP protocol.
 Run with: python -m mcp_server.server
 """

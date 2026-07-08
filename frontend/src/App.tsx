@@ -174,7 +174,7 @@ export default function App() {
         <div className="header-brand">
           <div className="header-icon">🔬</div>
           <div>
-            <div className="header-title">Deep Research Agent</div>
+            <div className="header-title">Zetabot</div>
             <div className="header-subtitle">MCP-Powered Multi-Hop Research</div>
           </div>
         </div>
@@ -404,8 +404,8 @@ export default function App() {
 
       {/* Footer */}
       <footer className="footer">
-        MCP-Powered Deep Research Agent · Built with LangGraph + FastMCP ·{' '}
-        <a href="https://github.com/Rishabhpm23/MCP-Powered-Deep-Research-Agent" target="_blank" rel="noreferrer">GitHub</a>
+        Zetabot — MCP-Powered Deep Research · Built with LangGraph + FastMCP ·{' '}
+        <a href="https://github.com/Rishabhpm23/Zetabot" target="_blank" rel="noreferrer">GitHub</a>
       </footer>
     </div>
   );

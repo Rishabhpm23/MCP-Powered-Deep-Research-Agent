@@ -1,7 +1,7 @@
 {
-  "name": "deep-research-mcp-server",
+  "name": "zetabot-mcp-server",
   "version": "1.0.0",
-  "description": "MCP Server for the Deep Research Agent — exposes modular research tools to LLM orchestrators.",
+  "description": "Zetabot MCP Server — exposes modular research tools to LLM orchestrators.",
   "tools": [
     {
       "name": "search_web",
