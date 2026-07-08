@@ -157,6 +157,15 @@ body::before {
   grid-template-columns: 1fr 380px;
   gap: 24px;
   padding: 24px 0;
+  /* Prevent grid children from overflowing the track width */
+  min-width: 0;
+}
+
+/* Critical: every direct grid child must declare min-width:0 so the
+   browser doesn't size the track to fit content instead of the 1fr fraction. */
+.main > * {
+  min-width: 0;
+  overflow: hidden;
 }
 
 @media (max-width: 1024px) {
@@ -310,6 +319,8 @@ body::before {
   gap: 6px;
   max-height: 280px;
   overflow-y: auto;
+  /* Prevent trace items from pushing the list wider than the panel */
+  overflow-x: hidden;
 }
 
 .trace-item {
@@ -360,17 +371,22 @@ body::before {
 .trace-item-desc {
   color: var(--text-muted);
   margin-top: 2px;
+  /* Truncate long tool output previews within the column width */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* ── Stats Bar ──────────────────────────────────────────────────────────────── */
 .stats-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* auto-fill with a min of 100px so cards wrap on narrow viewports
+     instead of overflowing the column */
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 12px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .stat-card {
@@ -457,7 +473,14 @@ body::before {
 }
 
 /* Markdown Report Styles */
-.report-content { color: var(--text-primary); }
+.report-content {
+  color: var(--text-primary);
+  /* Prevent long unbroken strings (URLs, code) from overflowing */
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+  width: 100%;
+}
 
 .report-content h1, .report-content h2, .report-content h3 {
   margin-top: 24px;
@@ -518,6 +541,9 @@ body::before {
 
 .report-content table {
   width: 100%;
+  /* Tables overflow on narrow containers without this */
+  display: block;
+  overflow-x: auto;
   border-collapse: collapse;
   margin-bottom: 16px;
   font-size: 13px;
