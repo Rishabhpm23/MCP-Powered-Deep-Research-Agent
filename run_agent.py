@@ -69,7 +69,7 @@ def run_research(query: str, verbose: bool = False, output_dir: str = "./reports
         "messages": [],
         "memory": memory,
         "next_action": "plan",
-        "error": "",
+        "errors": [],          # Improvement #3 — accumulated list, not single string
         "status": "Starting...",
     }
 
@@ -116,6 +116,12 @@ def run_research(query: str, verbose: bool = False, output_dir: str = "./reports
                 f"  [yellow]{i}.[/yellow] [cyan]{call['tool']}[/cyan] "
                 f"[dim](hop {call['hop']})[/dim] → {call['output_preview'][:100]}..."
             )
+
+    # ── Print accumulated error log if verbose and any errors occurred ─────────
+    if verbose and mem and mem.error_log:
+        console.rule("[bold red]Error Log (Accumulated)[/bold red]")
+        for i, err in enumerate(mem.error_log, 1):
+            console.print(f"  [red]{i}.[/red] {err}")
 
     # ── Render the report ──────────────────────────────────────────────────────
     if report:

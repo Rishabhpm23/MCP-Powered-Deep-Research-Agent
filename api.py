@@ -92,7 +92,7 @@ async def stream_research(req: ResearchRequest):
                 "messages": [],
                 "memory": memory,
                 "next_action": "plan",
-                "error": "",
+                "errors": [],          # Improvement #3 — accumulated list, not single string
                 "status": "Starting research...",
             }
 
@@ -153,6 +153,7 @@ async def stream_research(req: ResearchRequest):
                 "report": report,
                 "stats": final_mem.to_dict() if final_mem else {},
                 "tool_calls": final_mem.tool_call_log if final_mem else [],
+                "errors": final_mem.error_log if final_mem else [],   # Improvement #3
                 "created_at": datetime.now().isoformat(),
             }
 

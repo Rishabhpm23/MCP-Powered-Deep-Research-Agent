@@ -3,12 +3,21 @@ state.py
 ────────
 LangGraph State definition for the Deep Research Agent.
 All nodes read from and write to this shared TypedDict.
+
+Context Engineering improvement (ref: Context Engineering Analysis):
+  #3  `errors` is now a list[str] that accumulates across hops,
+      replacing the single overwritten `error: str` field.
 """
 
 from typing import Annotated, Any
 from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
 from agent.memory import ResearchMemory
+
+
+def _accumulate_errors(left: list[str], right: list[str]) -> list[str]:
+    """Reducer: append new errors to the existing list (never overwrite)."""
+    return left + [e for e in right if e]
 
 
 class AgentState(TypedDict):
@@ -22,7 +31,8 @@ class AgentState(TypedDict):
         messages:       LangChain messages (accumulate via add_messages).
         memory:         ResearchMemory object holding all intermediate outputs.
         next_action:    Routing signal — which node to visit next.
-        error:          Any error message from the last node.
+        errors:         Accumulated list of error strings across all hops.
+                        Never overwritten — new errors are appended.
         status:         Human-readable status label for the frontend.
     """
 
@@ -32,5 +42,5 @@ class AgentState(TypedDict):
     messages: Annotated[list[Any], add_messages]
     memory: ResearchMemory
     next_action: str   # "search" | "scrape" | "summarize" | "finalize" | "end"
-    error: str
+    errors: Annotated[list[str], _accumulate_errors]   # was: error: str
     status: str
