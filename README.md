@@ -408,12 +408,6 @@ Health check endpoint.
 
 ---
 
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
-
----
-
 <div align="center">
 
 Built with ❤️ by [Rishabhpm23](https://github.com/Rishabhpm23)
