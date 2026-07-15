@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 def summarize(
     text: str,
     focus: str = "",
-    max_length: int = 150,
+    max_length: int = 400,  # Idea 5: raised from 150 → 400 words for richer per-source summaries
 ) -> dict[str, Any]:
     """
     Summarize a block of text using an OpenAI LLM.

@@ -102,9 +102,10 @@ class ContextBuilder:
             f"Current session progress:\n{progress}\n\n"
             f"Strategic guidance: {strategy}\n\n"
             f"Available tools and their arguments:\n"
-            f"  - search_web(query: str, max_results: int=5)\n"
+            f"  - search_web(query: str, max_results: int=10, search_depth: str='advanced')\n"  # Idea 2: advanced depth + 10 results
             f"  - scrape_content(url: str, max_chars: int=8000)\n"
-            f"  - summarize(text: str, focus: str='', max_length: int=150)\n\n"
+            f"  - summarize(text: str, focus: str='', max_length: int=400)\n\n"  # Idea 5: 400-word summaries
+            f"IMPORTANT: For search_web, always use search_depth='advanced' and max_results=10 unless hops are critically low.\n\n"
             f"Given the step description and context, decide which tool to call.\n"
             f"Output ONLY valid JSON:\n"
             f'  {{"tool": "<tool_name>", "args": {{...}}}}\n'
@@ -115,29 +116,57 @@ class ContextBuilder:
         """
         Dynamic system prompt for finalizer_node.
         Adapts depth/persona based on how much data was actually gathered.
+        Idea 3: Expanded with 9 mandatory sections and explicit word-count targets
+        to force a comprehensive 1500–2000+ word report.
         """
         data_richness = len(memory.summaries) + len(memory.search_results)
         if data_richness >= 8:
-            depth = "Be comprehensive and detailed — you have rich data to draw from."
+            depth = (
+                "You have rich, multi-source data available. Be comprehensive, detailed, and "
+                "thorough. Write as an expert analyst publishing a professional research document."
+            )
         elif data_richness >= 3:
-            depth = "Be thorough but concise — you have moderate data."
+            depth = (
+                "You have moderate data available. Be thorough and specific. "
+                "Expand each section fully with all available evidence."
+            )
         else:
             depth = (
-                "Data is limited. Be honest about gaps and cite what you have. "
-                "Do not fabricate details."
+                "Data is limited. Be honest about gaps, cite what you have, "
+                "and do not fabricate details. Expand on what is available."
             )
 
         return (
-            f"You are an expert research analyst. {depth}\n\n"
-            f"Generate a well-structured Markdown research report.\n"
-            f"Include:\n"
-            f"  1. Executive Summary (2-3 sentences)\n"
-            f"  2. Key Findings (bullet points)\n"
-            f"  3. Detailed Analysis (paragraphs, cite sources inline)\n"
-            f"  4. Sources (numbered list of URLs)\n"
-            f"  5. Conclusion\n\n"
-            f"Use proper Markdown (##, bold, bullet points). "
-            f"Be factual and do not invent information."
+            f"You are an expert research analyst and technical writer. {depth}\n\n"
+            f"Generate a comprehensive, well-structured Markdown research report with ALL of the "
+            f"following 9 sections. Do NOT skip any section. Each section must meet its minimum "
+            f"word count — this is a professional research document, not a summary.\n\n"
+            f"Required sections (in order):\n"
+            f"  ## 1. Executive Summary (minimum 150 words)\n"
+            f"     A thorough overview of what was researched, why it matters, and the key conclusion.\n\n"
+            f"  ## 2. Background & Context (minimum 150 words)\n"
+            f"     Why is this comparison/topic important? What is the broader landscape?\n\n"
+            f"  ## 3. Key Findings (minimum 10 bullet points, each with 1–2 sentences of evidence)\n"
+            f"     Concrete, specific findings — numbers, benchmarks, quotes — not vague statements.\n\n"
+            f"  ## 4. Capability Deep-Dive (minimum 300 words)\n"
+            f"     Separate subsections (###) for each major dimension relevant to the query\n"
+            f"     (e.g., reasoning, coding, speed, cost, safety, multimodal, context window, API).\n\n"
+            f"  ## 5. Comparative Analysis (minimum 200 words)\n"
+            f"     Head-to-head comparison with a Markdown table where data supports it.\n"
+            f"     Columns: Dimension | Option A | Option B | Winner/Notes\n\n"
+            f"  ## 6. Use Case Recommendations (minimum 150 words)\n"
+            f"     Specific scenarios and which option is best suited for each, with reasoning.\n\n"
+            f"  ## 7. Limitations & Research Gaps (minimum 100 words)\n"
+            f"     Honest gaps in the research, caveats, or areas needing more investigation.\n\n"
+            f"  ## 8. Sources (all sources, numbered)\n"
+            f"     Full numbered list with URL and a one-line description of each source.\n\n"
+            f"  ## 9. Conclusion (minimum 150 words)\n"
+            f"     Synthesize all findings into a decisive, actionable conclusion.\n\n"
+            f"Formatting rules:\n"
+            f"  - Use proper Markdown: ##, ###, **bold**, bullet points, tables\n"
+            f"  - Cite sources inline as (Source: [Title](URL))\n"
+            f"  - Be factual — do not fabricate data\n"
+            f"  - Total report must be at minimum 1200 words"
         )
 
     # ─────────────────────────────────────────────────────────────────────────

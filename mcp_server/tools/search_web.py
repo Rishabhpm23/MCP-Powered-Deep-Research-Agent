@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 def search_web(
     query: str,
-    max_results: int = 5,
-    search_depth: str = "basic",
+    max_results: int = 10,          # Idea 2: raised from 5 → 10 for broader coverage
+    search_depth: str = "advanced", # Idea 2: raised from "basic" → "advanced" for full content
 ) -> dict[str, Any]:
     """
     Search the web using the Tavily API.

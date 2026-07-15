@@ -57,7 +57,7 @@ def _get_llm() -> ChatOpenAI:
 # ── Shared MCP client ──────────────────────────────────────────────────────────
 _MCP = MCPClient()
 
-MAX_HOPS = int(os.getenv("MAX_HOPS", "5"))
+MAX_HOPS = int(os.getenv("MAX_HOPS", "10"))  # Idea 1: raised from 5 → 10 for richer data gathering
 
 
 def _make_context_builder(state: AgentState) -> ContextBuilder:
@@ -184,7 +184,7 @@ def tool_caller_node(state: AgentState) -> dict:
     except Exception as e:
         logger.error(f"[ToolCaller] LLM decision failed: {e}. Using search fallback.")
         tool_name = "search_web"
-        tool_args = {"query": state["query"], "max_results": 3}
+        tool_args = {"query": state["query"], "max_results": 10, "search_depth": "advanced"}  # Idea 2: advanced depth + more results
         # Log the decision error (#3)
         memory.log_error(f"[tool_caller decision] {e}")
 
@@ -258,7 +258,7 @@ def memory_aggregator_node(state: AgentState) -> dict:
                     "summarize",
                     text=page["text"],
                     focus="key findings and important facts",
-                    max_length=120,
+                    max_length=400,  # Idea 5: raised from 120 → 400 words for richer summaries
                 )
                 if not result.get("error"):
                     word_count = result.get("word_count", 0)

@@ -89,7 +89,7 @@ def generate_report(
                 {"role": "user", "content": user_prompt},
             ],
             temperature=0.3,
-            max_tokens=2000,
+            max_tokens=5000,  # Idea 4: raised from 2000 → 5000 to remove report length ceiling
         )
 
         report = response.choices[0].message.content.strip()
